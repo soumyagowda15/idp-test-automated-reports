@@ -7,7 +7,7 @@
     "Testingtest": "mocha Test-Cases/Access-Token/testAccessToken/AccessToken.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
     "createJob": "mocha Test-Cases/Create-Job/testCreateJob/CreateJob.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
     "test": "mocha Test-Cases/test.js --timeout 1800 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
-    "E2E": "mocha Test-Cases/E2E/testE2E/e2e.js --timeout 1800000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit"
+    "E2E": "mocha Test-Cases/E2E/testE2E/e2e.js --timeout 9800000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,8 @@
     "app": "^0.1.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
+    "convert-excel-to-json": "^1.7.0",
+    "csvtojson": "^2.0.10",
     "delay": "^5.0.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
@@ -30,7 +32,10 @@
     "mongodb": "^4.13.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20",
+    "simple-excel-to-json": "^2.3.0",
     "stream": "0.0.2",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "xlsx": "^0.18.5",
+    "xlsx-to-json": "^0.3.0"
   }
 }
