@@ -12,7 +12,7 @@
             "args": [
                 "--timeout",
                 "99999",
-                "${workspaceFolder}/Test-Cases/E2E/testE2E/e2e.js"
+                "${workspaceFolder}/Test-Cases/E2E/testE2E/csv.js"
 
             ],
             "console": "externalTerminal"
