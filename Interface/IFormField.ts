@@ -6,5 +6,5 @@ export interface FormField {
     key: Key;
     value: Value;
     confidence: number;
-    config: Config;
+    config?: Config;
 }

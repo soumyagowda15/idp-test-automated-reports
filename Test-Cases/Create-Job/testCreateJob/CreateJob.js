@@ -1,30 +1,39 @@
-const chai=require("chai");
-const expect=require("chai").expect;
-const fs=require('fs')
-const chaiHttp=require("chai-http")
-chai.use(chaiHttp);
-//const file=require('../../../Attachment/test.js')
 
-const api=chai.request('https://api-dot-idp-docs-sandbox.el.r.appspot.com')
-describe("Create Job", async function () {
+const assert = require('chai').assert;
+const HTTPStatusCodes = require('http-status-codes');
+const HTTPStatusCode = require('http-status-code');
+const createJobTestData = require('../../../Configuration-Test_Data/Test-Data/testCreateJob.json')
+const genericMethods = require('../../../generic-Methods/generic_Methods');
+const configData = require('../../../Configuration-Test_Data/config/test_Config');
+var URL_CREATE_JOB = configData.BASE_URL + configData.SUB_URL_CREATE_JOB;
+var ACCESS_TOKEN, JOB_ID, FILE_ID;
 
-    
-    it.only("Upload Document to the Job", async function () {
-       
-     var resp= await api.post("/api/job/documents/upload")
-    
-       .set('Content-Type','multipart/form-data')
-       .set('tenant','neutrinos')
-       .set('Authorization','Bearer B7q2S6T0bPMJmz8LQbrsxN716WUpqycEtdQQ3ihF7uU')
-       
-      .attach('files',fs.createReadStream('../../../Attachment/AdharCard.pdf'),'AdharCard.pdf')
-      .field('job_id','63b67854fc06f8003b329260')
-       
-           
-       
-        expect(resp).to.have.status(200)
-       console.log("response is",resp)
-       console.log("******************")
-       console.log("response body",resp.body)
+describe("test", async function () {
+  it("Create a Job", async  () => {
+    let body = JSON.stringify(createJobTestData);
+    let resp = await genericMethods.postAPICall(URL_CREATE_JOB, {
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+        "tenant": "neutrinos",
+        "Authorization": `Bearer ${ACCESS_TOKEN}`
+      }
+
     })
+    //genericMethods.addContext(this, 'INPUT JSON', body);
+    //genericMethods.addContext(this, 'OUTPUT JSON', resp.body);
+    if (resp !== undefined) {
+      let bodyObj = JSON.parse(resp.body);
+      assert.equal(bodyObj[0].job_type, "doc_analysis");
+      assert.equal(bodyObj[0].status, "CREATED");
+      assert.exists(bodyObj[0]._id)
+      JOB_ID = bodyObj[0]._id
+      let createJobData = (await genericMethods.mongoDBDataFetch("jobs", { "job_name": bodyObj[0].job_name }, ''));
+      console.log("mongo Data", createJobData)
+      //genericMethods.addContext(this, 'JOBS MongoDB Data', createJobData);
+    }
+    else {
+      assert.fail(resp, "is undefined")
+    }
+  })
 })

@@ -8,6 +8,7 @@ import chaiHttp = require('chai-http');
 const csv = require('csvtojson')
 //const csvFilePath = '../../../CsvFiles/testData/comparision.csv'
 const csvFilePath = 'comparision.csv'
+import * as Mocha from 'mocha'
 //chai.use(chaiHttp);
 const HTTPStatusCodes = require('http-status-codes');
 const HTTPStatusCode = require('http-status-code');
@@ -25,11 +26,13 @@ var URL_CREATE_JOB = configData.BASE_URL + configData.SUB_URL_CREATE_JOB
 var URL_START_DOC_ANALYSIS = configData.BASE_URL + configData.URL_START_DOC_ANALYSIS
 var ACCESS_TOKEN: string, JOB_ID: string, FILE_ID: string;
 var document_label: string;
+import addContext = require('mochawesome/addContext');
+import { TestContext } from 'mochawesome/addContext';
 /* async function DocumentResult()
 { */
 describe("test", async function () {
 
-  it("Get an access token", async function () {
+  it("Get an access token", async  () => {
     let formBody = [];
     for (var data in testData) {
       var encodedKey = encodeURIComponent(data);
@@ -44,8 +47,8 @@ describe("test", async function () {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-    genericMethods.addContext(this, 'INPUT ', formBody);
-    genericMethods.addContext(this, 'OUTPUT ', resp.body);
+    //genericMethods.addContext(this, 'INPUT ', formBody);
+    //genericMethods.addContext(this, 'OUTPUT ', resp.body);
 
     if (resp !== undefined) {
       let bodyObj = JSON.parse(resp.body);
@@ -60,8 +63,7 @@ describe("test", async function () {
       assert.fail(resp, " is undefined");
     }
   })
-
-  it("Create a Job", async function () {
+  it("Create a Job", async  () => {
     let body = JSON.stringify(createJobTestData);
     let resp = await genericMethods.postAPICall(URL_CREATE_JOB, {
       body: body,
@@ -72,8 +74,8 @@ describe("test", async function () {
       }
 
     })
-    genericMethods.addContext(this, 'INPUT JSON', body);
-    genericMethods.addContext(this, 'OUTPUT JSON', resp.body);
+    //genericMethods.addContext(this, 'INPUT JSON', body);
+    //genericMethods.addContext(this, 'OUTPUT JSON', resp.body);
     if (resp !== undefined) {
       let bodyObj = JSON.parse(resp.body);
       assert.equal(bodyObj[0].job_type, "doc_analysis");
@@ -82,7 +84,7 @@ describe("test", async function () {
       JOB_ID = bodyObj[0]._id
       let createJobData = (await genericMethods.mongoDBDataFetch("jobs", { "job_name": bodyObj[0].job_name }, ''));
       console.log("mongo Data", createJobData)
-      genericMethods.addContext(this, 'JOBS MongoDB Data', createJobData);
+      //genericMethods.addContext(this, 'JOBS MongoDB Data', createJobData);
     }
     else {
       assert.fail(resp, "is undefined")
@@ -103,10 +105,10 @@ describe("test", async function () {
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
         .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
-      genericMethods.addContext(this, 'OUTPUT', resp.body);
+      //genericMethods.addContext(this, 'OUTPUT', resp.body);
       let uploadDocData = (await genericMethods.mongoDBDataFetch("files.files", { "metadata.job_id": JOB_ID }, ''));
       console.log("mongo Data", uploadDocData)
-      genericMethods.addContext(this, `files.files MongoDB Data`, uploadDocData);
+      //genericMethods.addContext(this, `files.files MongoDB Data`, uploadDocData);
       if (resp !== undefined) {
         // let bodyObj = JSON.parse(resp.body);
 
@@ -125,7 +127,6 @@ describe("test", async function () {
       assert.fail(JOB_ID, "JOB ID is undefined/Null")
     }
   })
-
   it("Start Doc Analysis", async function () {
     /* ACCESS_TOKEN='yg1QGMlt2AAxYzfWuXSwwQX4wMDAb03qE2plKLGqVgA'
     JOB_ID="63bfcd2f3c141d0032bf4697" */
@@ -139,8 +140,8 @@ describe("test", async function () {
         "Content-Type": "application/json"
       }
     })
-    genericMethods.addContext(this, 'INPUT', body)
-    genericMethods.addContext(this, 'OUTPUT', resp.body)
+    //genericMethods.addContext(this, 'INPUT', body)
+    //genericMethods.addContext(this, 'OUTPUT', resp.body)
     if (resp !== undefined) {
       assert.equal(resp.statusCode, HTTPStatusCodes.OK)
     }
@@ -162,8 +163,8 @@ describe("test", async function () {
         "Authorization": `Bearer ${ACCESS_TOKEN}`
       }
     })
-    genericMethods.addContext(this, 'INPUT', "job_id:" + JOB_ID);
-    genericMethods.addContext(this, 'OUTPUT', resp.body);
+    //genericMethods.addContext(this, 'INPUT', "job_id:" + JOB_ID);
+    //genericMethods.addContext(this, 'OUTPUT', resp.body);
     if (resp !== undefined) {
       assert.equal(resp.statusCode, HTTPStatusCodes.OK);
       let bodyObj = JSON.parse(resp.body);
@@ -196,15 +197,15 @@ describe("test", async function () {
 
       }
       while (DataFetch)
-      genericMethods.addContext(this, 'file.files MongoDB Data', filesDataFetch);
+      //genericMethods.addContext(this, 'file.files MongoDB Data', filesDataFetch);
       document_label = filesDataFetch[0]["metadata"]["classification"];
     }
     else {
       assert.fail(" Response is undefined", resp);
     }
   })
-  it.only("Get Job Document Result", async function () {
-    ACCESS_TOKEN="DxH2L2WLeYfLlc-wArl4jHci0akMbCRIUuM_M5AWtLx"
+  it("Get Job Document Result", async function () {
+    ACCESS_TOKEN="dJ06F4u8-FtqSRbQCwlPJanTzNDUiuCvCZec8obP9Xp"
     JOB_ID="63cf824590458500300cf243"
     
      FILE_ID ="63cf826790458500300cf245"
@@ -228,7 +229,7 @@ describe("test", async function () {
       }
     })
 
-    genericMethods.addContext(this, 'RESPONSE', resp.body);
+    //genericMethods.addContext(this, 'RESPONSE', resp.body);
     //Engine Result
     let EngineResultField = JSON.parse(resp.body);
     EngineResultField = EngineResultField[0]["form_fields"];

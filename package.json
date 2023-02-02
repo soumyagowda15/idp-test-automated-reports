@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "Testingtest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  Test-Cases/Access-Token/testAccessToken/AccessToken.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
-    "createJob": "mocha Test-Cases/Create-Job/testCreateJob/CreateJob.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
+    "AccessToken": "mocha --require ts-node/register Test-Cases/Access-Token/testAccessToken/AccessToken.ts --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/AccessTokenReport,reportFilename=AccessTokenReport,reportTitle=AccessTokenTesting,reportPageTitle=ReportTesting,json=true --exit",
+    "createJob": "mocha --require ts-node/register  Test-Cases/E2E/testE2E/createJob.ts --timeout 7880000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
     "test": "mocha Test-Cases/test.js --timeout 1800 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
-    "E2E": "mocha -r ts-node/register Test-Cases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit"
+    "E2E": "mocha --require ts-node/register Test-Cases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aternus/csv-to-xlsx": "^2.0.3",
     "FormData": "^0.10.1",
     "app": "^0.1.0",
     "chai-http": "^4.3.0",
@@ -29,11 +31,12 @@
     "got": "11.8.6",
     "http-status-code": "^2.1.0",
     "http-status-codes": "^2.2.0",
+    "jasmine-ts": "^0.4.0",
     "jsdom": "^21.1.0",
     "json2csv": "^6.0.0-alpha.2",
     "jsonexport": "^3.2.0",
     "mocha-table": "^1.0.8",
-    "mochawesome": "^7.1.3",
+    "mochawesome": "^5.0.0",
     "mongodb": "^4.13.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20",
@@ -44,16 +47,20 @@
     "supertest": "^6.3.3",
     "ts-data-checker": "^1.2.0",
     "ts-loader": "^9.4.2",
-    "typescript": "^4.9.4",
+    "types": "^0.1.1",
+    "uuidv4": "^6.2.13",
     "write-json-file": "4.3.0",
     "xlsx": "^0.18.5",
     "xlsx-to-json": "^0.3.0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
+    "@types/jasmine": "^4.3.1",
     "@types/mocha": "^10.0.1",
+    "@types/mochawesome": "6.2.1",
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   }
 }
