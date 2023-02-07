@@ -1,16 +1,25 @@
 var FormData = require('form-data');
 var fs = require('fs');
-var fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const path = require('path');
 const fsExtra = require('fs-extra');
+
 module.exports = {
     update_AttributeValue: (jsonData, strAttributeName, strAttributeValue) => {
         try {
-            jsonData = JSON.parse(jsonData)
+            jsonData = JSON.parse(jsonData);
             jsonData[strAttributeName] = strAttributeValue
             return JSON.stringify(jsonData);
         } catch (error) {
+            return error;
+        }
+    },
+    remove_Attribute: (jsonData, strAttributeName) => {
+        try {
+            delete jsonData[strAttributeName];
+            return jsonData
+        }
+        catch (error) {
             return error;
         }
     },

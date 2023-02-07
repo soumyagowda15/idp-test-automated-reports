@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "Testingtest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  Test-Cases/Access-Token/testAccessToken/AccessToken.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
-    "AccessToken": "mocha --require ts-node/register Test-Cases/Access-Token/testAccessToken/AccessToken.ts --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/AccessTokenReport,reportFilename=AccessTokenReport,reportTitle=AccessTokenTesting,reportPageTitle=ReportTesting,json=true --exit",
-    "createJob": "mocha --require ts-node/register  Test-Cases/E2E/testE2E/createJob.ts --timeout 7880000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
+    "Testingtest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  Test-Cases/Access-Token/testIDPTesting/IDPTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
+    "IDPTesting": "mocha Test-Cases/IDP_TESTING/testIDPTesting/IDPTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTestingTesting,reportPageTitle=ReportTesting,json=true --exit",
+    "createJob": "mocha --require ts-node/register  Test-Cases/Create-Job/testCreateJob/CreateJob.js --timeout 7880000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
     "test": "mocha Test-Cases/test.js --timeout 1800 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport,reportFilename=TestingReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit",
     "E2E": "mocha --require ts-node/register Test-Cases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=ReportTesting,reportPageTitle=ReportTesting,json=true --exit"
   },
@@ -28,7 +28,7 @@
     "formdata-node": "^4.4.1",
     "fs": "0.0.1-security",
     "fs-extra": "^11.1.0",
-    "got": "11.8.6",
+    "got": "^9.6.0",
     "http-status-code": "^2.1.0",
     "http-status-codes": "^2.2.0",
     "jasmine-ts": "^0.4.0",
