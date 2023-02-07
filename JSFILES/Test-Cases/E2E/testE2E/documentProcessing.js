@@ -1,40 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestEngineResult = void 0;
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const path = require('path');
-const configData = require('../../../Configuration-Test_Data/config/test_Config');
-const testData = require('../../../Configuration-Test_Data/Test-Data/Access-Token/testData/testAccessToken.json');
-const genericMethods = require('../../../generic-Methods/generic_Methods');
+const csvCreation = require('./createCsv');
+const stringSimilarity = require("string-similarity");
+var expectedKeyarr = ["EXPECTED_KEYS"], expectedValuearr = ["EXPECTED_VALUES"], actualKeyarr = [], actualValuesarr = [], confidenceValuearr = [];
+var confidenceKeyarr = [];
 function similarity(str1, str2) {
-    console.log("similarity check for ", str1, str2);
-    return str1 == str2 ? 100 : 0;
+    var similarity = stringSimilarity.compareTwoStrings(str1, str2);
+    return similarity;
 }
 class TestEngineResult {
-    constructor(engineResult, formFields) {
+    constructor(engineResult, expectedFormField) {
         this.engineResult = engineResult;
-        this.formFields = formFields;
+        this.expectedFormField = expectedFormField;
     }
-    validateFormField(expectedFormField, engineFormField) {
-        let confidence = 100;
-        console.log("expectedFormField", expectedFormField);
-        for (let i = 0; i < expectedFormField.length; i++) {
-            console.log("iteration", i);
+    validateFormField(engineFormField, expectedFormField) {
+        var _a;
+        for (let expectedKeysCount = 0; expectedKeysCount < expectedFormField.length; expectedKeysCount++) {
+            expectedKeyarr.push(expectedFormField[expectedKeysCount].key.content);
+            expectedValuearr.push((_a = expectedFormField[expectedKeysCount].config) === null || _a === void 0 ? void 0 : _a._n_field_type_);
             engineFormField.forEach(v => {
-                var comparisionKeys = Object.keys(expectedFormField[0]);
-                var comparisionValues = Object.values(expectedFormField[0]);
-                console.log("comparisionKeys[i]", comparisionKeys[i]);
-                console.log("comparisionValues[i]", comparisionValues[i]);
-                const expectedLabel = comparisionKeys[i];
-                const expectedValue = comparisionValues[i];
-                const actualLabel = v.key.content;
-                const actualValue = v.value.content;
-                const labelScore = similarity(expectedLabel, actualLabel);
-                const valueScore = similarity(expectedValue, actualValue);
-                confidence = (labelScore + valueScore) / 2;
+                var _a;
+                if ((expectedFormField[expectedKeysCount].key.content).includes(v.key.content)) {
+                    const expectedLabel = expectedFormField[expectedKeysCount].key.content;
+                    const expectedValue = (_a = expectedFormField[expectedKeysCount].config) === null || _a === void 0 ? void 0 : _a._n_field_type_;
+                    const actualLabel = v.key.content;
+                    const actualValue = typeof (v.value.content);
+                    actualKeyarr.push(v.key.content);
+                    actualValuesarr.push(v.value.content);
+                    var confidenceLabel = similarity(expectedLabel, actualLabel);
+                    confidenceKeyarr.push(confidenceLabel);
+                    var confidenceValue = similarity(expectedValue, actualValue);
+                    confidenceValuearr.push(confidenceValue);
+                }
             });
         }
-        return confidence;
+        csvCreation.createCsv(expectedKeyarr, expectedValuearr, actualKeyarr, actualValuesarr, confidenceKeyarr, confidenceValuearr);
     }
 }
 exports.TestEngineResult = TestEngineResult;
