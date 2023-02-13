@@ -8,6 +8,9 @@ module.exports={
     TENANT_MISSING:"missing tenant header",
     INVALID_PDF_STRUCTURE:'Invalid PDF structure.',
     TOKEN_UNAVAILABLE:"Token unavailable",
-    INVALID_ENDPOINT:"Invalid API endpoint"
+    INVALID_ENDPOINT:"Invalid API endpoint",
+    MISSING_GRANT_PARAMETER:"missing required parameter(s) (grant_type)",
+    INVALID_CLIENT:"no client authentication mechanism provided"
+
 
 }
