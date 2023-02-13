@@ -32,7 +32,7 @@ addContext: (object, title, value) => {
         return error
     }
 },
-mongoDBDataFetch: async (strCollectionName, jsonDataFieldToSearch, strFieldName, strClrCollection) => {
+mongoDBDataFetch: async (strCollectionName, jsonDataFieldToSearch) => {
     try {
         let elements = [];
         let items;
@@ -41,22 +41,13 @@ mongoDBDataFetch: async (strCollectionName, jsonDataFieldToSearch, strFieldName,
         let database = await client.db(configData.MONGO_TEST_DB_ENVIRONMENTS.MONGODB_DATABASE_NAME)
         let collection = await database.collection(strCollectionName)
 
-        if (strClrCollection) {
-            items = await collection.deleteMany({});
-        }
+       
         if (jsonDataFieldToSearch != "") {
-            items = await collection.find(jsonDataFieldToSearch).toArray();
+            elements = await collection.find(jsonDataFieldToSearch).toArray();
         } else {
-            items = await collection.find().toArray();
+            elements = await collection.find().toArray();
         }
-        if (strFieldName != "") {
-            items.forEach(element => {
-                elements.push(element[strFieldName]);
-            });
-        } else {
-            elements = items;
-        }
-        // client.close();
+       
         return elements;
     } catch (err) {
         console.log(err)
