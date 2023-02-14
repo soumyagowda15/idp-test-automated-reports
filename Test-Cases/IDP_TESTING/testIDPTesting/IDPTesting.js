@@ -21,7 +21,7 @@ const fs = require('fs')
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 describe("Neutrinos Intelligent Document Processing APIs", async function () {
-  beforeEach(async function(){
+  before(async function(){
     let body = dataGeneration.update_AttributeValue(JSON.stringify(accessTokenTestData), "client_id", configData.CLIENT_ID);
     body = dataGeneration.update_AttributeValue(body, "client_secret", configData.CLIENT_SECRET);
     let formBody = [];
