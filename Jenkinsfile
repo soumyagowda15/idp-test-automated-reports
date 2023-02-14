@@ -17,7 +17,7 @@ pipeline {
        stage("Publish Report") {
       steps {
         publishHTML(target: [
-          reportDir: 'Reporting\IDPTestingReport', 
+          reportDir: 'Reporting/IDPTestingReport', 
           reportFiles: 'index.html', 
           reportName: 'HTML Report'
         ])
