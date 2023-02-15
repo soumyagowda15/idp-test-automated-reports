@@ -1,27 +1,28 @@
 pipeline {
-    agent {
-    label 'node'
-  }
+    agent any
+    tools {
+        nodejs 'nodejs-14.17.0'
+    }
     stages {
         stage('Build') {
             steps {
-                 sh 'npm install'
+                sh 'npm install'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-               sh 'npm run IDPTesting'
+                sh 'npm run IDPTesting'
             }
         }
-       stage("Publish Report") {
-      steps {
-        publishHTML(target: [
-          reportDir: 'Reporting/IDPTestingReport', 
-          reportFiles: 'index.html', 
+        stage('Publish Report') {
+            steps {
+                publishHTML(target: [
+          reportDir: 'Reporting/IDPTestingReport',
+          reportFiles: 'index.html',
           reportName: 'HTML Report'
         ])
-      }
+            }
         }
     }
 }
