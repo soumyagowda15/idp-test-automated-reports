@@ -1,3 +1,4 @@
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
     tools {
@@ -17,20 +18,20 @@ pipeline {
                 echo 'Testing..'
                 sh 'npm run IDPTesting'
             }
-            post {
-        unstable 'Test failed but continuing the pipeline'
-            }
         }
         stage('Publish Report') {
             steps {
                 publishHTML([
-    target: [
-        reportDir: 'Reporting/IDPTestingReport',
-        reportFiles: 'index.html',
-        reportName: 'HTML Report'
-    ]
-])
+                    target: [
+                        reportDir: 'Reporting/IDPTestingReport',
+                        reportFiles: 'index.html',
+                        reportName: 'HTML Report'
+                    ]
+                ])
             }
         }
+    }
+    post {
+        unstable 'Test failed but continuing the pipeline'
     }
 }
