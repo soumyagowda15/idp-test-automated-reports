@@ -1,7 +1,10 @@
-pipeline {
+ pipeline {
     agent any
     tools {
         nodejs 'nodejs-14.17.0'
+    }
+    triggers {
+        cron('0 6 * * *')
     }
     stages {
         stage('Build') {
