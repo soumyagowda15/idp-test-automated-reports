@@ -20,11 +20,13 @@
         }
         stage('Publish Report') {
             steps {
-                publishHTML(target: [
-          reportDir: 'Reporting/IDPTestingReport',
-          reportFiles: 'index.html',
-          reportName: 'HTML Report'
-        ])
+                publishHTML([
+    target: [
+        reportDir: 'Reporting/IDPTestingReport',
+        reportFiles: 'index.html',
+        reportName: 'HTML Report'
+    ]
+])
             }
         }
     }
