@@ -1,4 +1,4 @@
- pipeline {
+pipeline {
     agent any
     tools {
         nodejs 'nodejs-14.17.0'
@@ -16,6 +16,9 @@
             steps {
                 echo 'Testing..'
                 sh 'npm run IDPTesting'
+            }
+            post {
+        unstable 'Test failed but continuing the pipeline'
             }
         }
         stage('Publish Report') {
