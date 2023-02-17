@@ -1,7 +1,0 @@
-EXPECTED_KEYS,"Ngày, tháng, năm sinh: ","Họ và tên / Full name:
-",S6/No.: ,Giới tính: 
-ACTUAL_KEYS,,,,
-KEY_CONFIDENCE,,,,
-EXPECTED_VALUES,date,string,string,string
-ACTUAL_VALUES,,,,
-VALUE_CONFIDENCE,,,,
