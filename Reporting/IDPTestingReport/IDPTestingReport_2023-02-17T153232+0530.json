@@ -1,0 +1,468 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 15,
+    "passes": 0,
+    "pending": 1,
+    "failures": 14,
+    "start": "2023-02-17T10:02:31.648Z",
+    "end": "2023-02-17T10:02:32.843Z",
+    "duration": 1195,
+    "testsRegistered": 15,
+    "passPercent": 0,
+    "pendingPercent": 6.666666666666667,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "ac484bdb-c17d-4b22-9c58-9463fe1c6114",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5eb6c8c1-68f6-4bce-8d82-5f2e9fca8f38",
+          "title": "Neutrinos Intelligent Document Processing APIs",
+          "fullFile": "D:\\Testing\\idp-automated-tests\\TestCases\\IDP\\testIDP\\idpTesting.js",
+          "file": "\\TestCases\\IDP\\testIDP\\idpTesting.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Neutrinos Intelligent Document Processing APIs\"",
+              "fullTitle": "Neutrinos Intelligent Document Processing APIs \"before all\" hook in \"Neutrinos Intelligent Document Processing APIs\"",
+              "timedOut": false,
+              "duration": 352,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let body = dataGeneration.update_AttributeValue(JSON.stringify(accessTokenTestData), \"client_id\", configData.CLIENT_ID);\nbody = dataGeneration.update_AttributeValue(body, \"client_secret\", configData.CLIENT_SECRET);\nlet formBody = [];\nfor (var data in accessTokenTestData) {\n  var encodedKey = encodeURIComponent(data);\n  var encodedValue = encodeURIComponent(accessTokenTestData[data]);\n  formBody.push(encodedKey + \"=\" + encodedValue);\n}\nbody = formBody.join(\"&\");\nresp = await genericMethods.postAPICall(URL_ACCESS_TOKEN, {\n  body: body,\n  headers: {\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n  }\n})\nlet bodyObj = JSON.parse(resp.body);\nACCESS_TOKEN = bodyObj.access_token;",
+              "err": {},
+              "uuid": "db0ee339-b136-4b71-a0ae-f6fb6fe9844c",
+              "parentUUID": "5eb6c8c1-68f6-4bce-8d82-5f2e9fca8f38",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+              "title": "Upload Document to a Job",
+              "fullFile": "D:\\Testing\\idp-automated-tests\\TestCases\\IDP\\testIDP\\idpTesting.js",
+              "file": "\\TestCases\\IDP\\testIDP\\idpTesting.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "TC_UD_01->To verify user is able to uplaod pdf document successfully with job_id",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_01->To verify user is able to uplaod pdf document successfully with job_id",
+                  "timedOut": false,
+                  "duration": 4,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\n/* JOB_ID= \"63e1dd7513f5a0003b8d3900\"\nACCESS_TOKEN=\"cZnQUIybh-2IvWwqyhK5N9mSDr3Qm9ZuGshGU6RgK-b\" */\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet uploadDocMongoData = (await genericMethods.mongoDBDataFetch(\"files.files\", { \"metadata.job_id\": JOB_ID }, ''));\ngenericMethods.addContext(this, 'Upload Document', uploadDocMongoData)\nif (resp !== undefined) {\n  assert.equal(resp.statusCode, HTTPStatusCodes.OK);\n  assert.exists(resp.body[\"_id\"]);\n  FILE_ID=resp.body[\"_id\"];\n  // assertion for other fields are pending\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:602:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "4012e406-2ae2-475f-aaf4-5bfa9b5d2870",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_02->To verify user is able to upload multiple documnets to same job_id",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_02->To verify user is able to upload multiple documnets to same job_id",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "pending",
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": true,
+                  "context": null,
+                  "code": "",
+                  "err": {},
+                  "uuid": "430b16c4-d822-44af-bdcd-bc71fa66c33c",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_03->To verify only pdf format documnet is supported",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_03->To verify only pdf format documnet is supported",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/pancard.png`), `pancard.png`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = resp.body\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.INTERNAL_SERVER_ERROR);\n  assert.equal(bodyObj.message.message, dataValidation.INVALID_PDF_STRUCTURE);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:641:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "d49b1e55-ffab-40d0-a900-1bb0d585b79f",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_04->To verify error is thrown if the job_id sent in the request body is not present in the jobs mongoDB Collections",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_04->To verify error is thrown if the job_id sent in the request body is not present in the jobs mongoDB Collections",
+                  "timedOut": false,
+                  "duration": 5,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', \"Invalid Job_id\")\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCode.BAD_REQUEST);\n  //message pending-issue created\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "estack": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "diff": null
+                  },
+                  "uuid": "09fba957-c7aa-4fba-941f-f186f838fafd",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_05->To Verify Error is thrown if the content-type in the request is not multipart/form-data",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_05->To Verify Error is thrown if the content-type in the request is not multipart/form-data",
+                  "timedOut": false,
+                  "duration": 788,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": "{\n  \"title\": \"OUTPUT\",\n  \"value\": \"<html>\\r\\n<head><title>400 Bad Request</title></head>\\r\\n<body>\\r\\n<center><h1>400 Bad Request</h1></center>\\r\\n<hr><center>nginx</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+                  "code": "var URL_UPLOAD_DOCUMENT = configData.BASE_URL + ' /api/job/documents/upload';\nlet body = dataGeneration.update_AttributeValue(JSON.stringify(uploadDocument), \"job_id\", \"638f2bcd9ed076003b9cd7dc\");\nresp = await genericMethods.postAPICall(URL_UPLOAD_DOCUMENT, {\n  body: body,\n  headers: {\n    \"Content-Type\": \"application/json\",\n    \"tenant\": \"neutrinos\",\n    \"Authorization\": `Bearer ${ACCESS_TOKEN}`\n  }\n})\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nassert.fail();\n// Created issue, need to be fixed",
+                  "err": {
+                    "message": "AssertionError: assert.fail()",
+                    "estack": "AssertionError: assert.fail()\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:687:14)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)",
+                    "diff": null
+                  },
+                  "uuid": "dc45e4e7-20fc-4dd6-b4d5-7ed250cd899b",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_06->To Verify user is not able to upload the document if expired access Token is passed in the header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_06->To Verify user is not able to upload the document if expired access Token is passed in the header",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${configData.EXPIRED_ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.FORBIDDEN);\n  assert.equal(bodyObj.result.reason, validation.TOKEN_EXPIRED);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:699:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "8a2319a1-6189-4b31-b02c-8851a25f96af",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_07->To Verify user is not able to upload the document if Invalid access Token is passed in the header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_07->To Verify user is not able to upload the document if Invalid access Token is passed in the header",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', \"INVALID_ACCESS_TOKEN\")\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.FORBIDDEN);\n  assert.equal(bodyObj.result.reason, validation.TOKEN_UNAVAILABLE);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:720:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "8712fa61-55a7-4633-8836-2a639bf75402",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_08->To verify error is thrown if the tenant is not neutrinos in the request header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_08->To verify error is thrown if the tenant is not neutrinos in the request header",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'IDP_DEV')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.FORBIDDEN);\n  // assert.equal(bodyObj.result.reason, validation.INVALID_TENANT);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:740:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "6b466a9b-7c2f-433b-9b58-3882202ce1eb",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_09->To verify error is thrown if empty tenant is passed in the header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_09->To verify error is thrown if empty tenant is passed in the header",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', ' ')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.FORBIDDEN);\n  assert.equal(bodyObj.result.reason, validation.TENANT_MISSING);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:761:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "5e4b792c-b0e2-4b6f-9842-fd3e1f75c197",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_10->To verify error is thrown if empty access token is passed in the header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_10->To verify error is thrown if empty access token is passed in the header",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', ' ')\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.FORBIDDEN);\n  assert.equal(bodyObj.result.reason, validation.TOKEN_UNAVAILABLE);\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:782:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "bdb9f00d-9722-4c58-8d63-a18230b5eea2",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_11->To verify error is thrown if document is not uploaded in request body",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_11->To verify error is thrown if document is not uploaded in request body",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  //.attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.BAD_REQUEST);\n  //issue created\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:802:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "c851c14d-6943-47d0-bc61-05e7570b8f40",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_12->To verify error is thrown if job_id is removed in the request body",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_12->To verify error is thrown if job_id is removed in the request body",
+                  "timedOut": false,
+                  "duration": 3,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.BAD_REQUEST);\n  //Issue created\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "estack": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "diff": null
+                  },
+                  "uuid": "a11c119c-a3e1-4caa-b076-8a116c9adc39",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_13->To verify error is thron if files field is removed in the header",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_13->To verify error is thron if files field is removed in the header",
+                  "timedOut": false,
+                  "duration": 1,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .field('job_id', JOB_ID)\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.BAD_REQUEST);\n  //issue created\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "ReferenceError: JOB_ID is not defined",
+                    "estack": "ReferenceError: JOB_ID is not defined\n    at Context.<anonymous> (TestCases\\IDP\\testIDP\\idpTesting.js:841:26)\n    at processImmediate (internal/timers.js:464:21)",
+                    "diff": null
+                  },
+                  "uuid": "a68ba861-0663-40ec-a422-a5f24af50a17",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_14->To verify error is thrown if job_id is empty",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_14->To verify error is thrown if job_id is empty",
+                  "timedOut": false,
+                  "duration": 3,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', \" \")\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.BAD_REQUEST);\n  //issue created\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "estack": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "diff": null
+                  },
+                  "uuid": "b4c232a3-740c-4b16-9406-ffc002b171e7",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "TC_UD_15->To verify error is thrown if job_id is empty space",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Upload Document to a Job TC_UD_15->To verify error is thrown if job_id is empty space",
+                  "timedOut": false,
+                  "duration": 4,
+                  "state": "failed",
+                  "speed": null,
+                  "pass": false,
+                  "fail": true,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.use(chaiHttp);\nconst api = chai.request(configData.BASE_URL)\nvar resp = await api.post(\"/api/job/documents/upload\")\n  .set('Content-Type', 'multipart/form-data')\n  .set('tenant', 'neutrinos')\n  .set('Authorization', `Bearer ${ACCESS_TOKEN}`)\n  .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)\n  .field('job_id', \" \")\ngenericMethods.addContext(this, 'OUTPUT', resp.body);\nlet bodyObj = (resp.body);\nif (resp !== undefined) {\n  assert.equal(resp.status, HTTPStatusCodes.BAD_REQUEST);\n  //issue created--document is uploaded\n}\nelse {\n  assert.fail(resp, \"is undefined\");\n}",
+                  "err": {
+                    "message": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "estack": "Error: ENOENT: no such file or directory, open 'D:\\Attachment\\Passport\\Passport.pdf'",
+                    "diff": null
+                  },
+                  "uuid": "c9380160-9ac8-4493-95e9-b3b69d510cef",
+                  "parentUUID": "5076a7b4-279b-4a28-aa47-bb45b523f402",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [],
+              "failures": [
+                "4012e406-2ae2-475f-aaf4-5bfa9b5d2870",
+                "d49b1e55-ffab-40d0-a900-1bb0d585b79f",
+                "09fba957-c7aa-4fba-941f-f186f838fafd",
+                "dc45e4e7-20fc-4dd6-b4d5-7ed250cd899b",
+                "8a2319a1-6189-4b31-b02c-8851a25f96af",
+                "8712fa61-55a7-4633-8836-2a639bf75402",
+                "6b466a9b-7c2f-433b-9b58-3882202ce1eb",
+                "5e4b792c-b0e2-4b6f-9842-fd3e1f75c197",
+                "bdb9f00d-9722-4c58-8d63-a18230b5eea2",
+                "c851c14d-6943-47d0-bc61-05e7570b8f40",
+                "a11c119c-a3e1-4caa-b076-8a116c9adc39",
+                "a68ba861-0663-40ec-a422-a5f24af50a17",
+                "b4c232a3-740c-4b16-9406-ffc002b171e7",
+                "c9380160-9ac8-4493-95e9-b3b69d510cef"
+              ],
+              "pending": [
+                "430b16c4-d822-44af-bdcd-bc71fa66c33c"
+              ],
+              "skipped": [],
+              "duration": 813,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 180000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 180000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 180000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "IDPTestingReport",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "5.0.0"
+    },
+    "marge": {
+      "options": {
+        "timestamp": true,
+        "reportDir": "Reporting/IDPTestingReport",
+        "reportFilename": "IDPTestingReport",
+        "reportTitle": "IDPTestingTesting",
+        "reportPageTitle": "ReportTesting",
+        "json": "true"
+      },
+      "version": "4.1.0"
+    }
+  }
+}

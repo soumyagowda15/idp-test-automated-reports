@@ -21,7 +21,7 @@ const fs = require('fs')
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 describe("Neutrinos Intelligent Document Processing APIs", async function () {
-  before(async function(){
+  beforeEach(async function(){
     let body = dataGeneration.update_AttributeValue(JSON.stringify(accessTokenTestData), "client_id", configData.CLIENT_ID);
     body = dataGeneration.update_AttributeValue(body, "client_secret", configData.CLIENT_SECRET);
     let formBody = [];
@@ -637,7 +637,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/pancard.png`), `pancard.png`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/pancard.png`), `pancard.png`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -658,7 +658,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', "Invalid Job_id")
       genericMethods.addContext(this, 'OUTPUT', resp.body);
       if (resp !== undefined) {
@@ -695,7 +695,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${configData.EXPIRED_ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -716,7 +716,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', "INVALID_ACCESS_TOKEN")
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -736,7 +736,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'IDP_DEV')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -757,7 +757,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', ' ')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -778,7 +778,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', ' ')
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -818,7 +818,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
 
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -857,7 +857,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', " ")
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -877,7 +877,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`../../../Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
         .field('job_id', " ")
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -1499,8 +1499,8 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       }
     })
     it("TC_GD_02->To verify error is thrown if invalid job_id and file_id is provided", async function () {
-      let SUB_URL_GET_DOCUMENT = `/api/job/${JOB_ID}/file/${FILE_ID}`
-      URL_GET_DOCUMENT = configData.BASE_URL + SUB_URL_GET_DOCUMENT
+      let SUB_URL_GET_DOCUMENT = `/api/job/${JOB_ID}/file/${FILE_ID}`;
+      URL_GET_DOCUMENT = configData.BASE_URL + SUB_URL_GET_DOCUMENT;
       resp = await genericMethods.getAPICall(URL_GET_DOCUMENT, {
         headers:
         {
@@ -1510,7 +1510,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
       genericMethods.addContext(this, 'INPUT', "job_id:" + JOB_ID + "  file_id:" + FILE_ID);
       //Issue created
-      assert.equal(resp.statusCode, HTTPStatusCodes.BAD_REQUEST)
+      assert.equal(resp.statusCode, HTTPStatusCodes.BAD_REQUEST);
     })
 
     it("TC_GD_03->To verify error is thrown if file_id of different job is provided in the query parameter", async function () {

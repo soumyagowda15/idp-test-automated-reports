@@ -1,5 +1,4 @@
 const got = require('got');
-const formData=require('formdata-node');
 const addContext = require('mochawesome/addContext')
 const connectionData=require('./Connection');
 const configData=require('../ConfigurationTestData/config/test_Config');
@@ -35,9 +34,8 @@ addContext: (object, title, value) => {
 mongoDBDataFetch: async (strCollectionName, jsonDataFieldToSearch) => {
     try {
         let elements = [];
-        let items;
         
-            client = await connectionData.connectTestMongoDB();
+        client = await connectionData.connectTestMongoDB();
         let database = await client.db(configData.MONGO_TEST_DB_ENVIRONMENTS.MONGODB_DATABASE_NAME)
         let collection = await database.collection(strCollectionName)
 

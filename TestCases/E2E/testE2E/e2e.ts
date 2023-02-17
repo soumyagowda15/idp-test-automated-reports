@@ -82,7 +82,6 @@ describe("Neutrinos IDP E2E Testing",async function(){
           "tenant": "neutrinos",
           "Authorization": `Bearer ${ACCESS_TOKEN}`
         }
-    
       })
       if (resp !== undefined) {
         let bodyObj = JSON.parse(resp.body);
@@ -96,7 +95,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
         assert.fail(resp, "is undefined")
       }
     })
-    
+
     it("Similart Check", async function () {
       /* ACCESS_TOKEN="zPPyGIXVloIKCQvPcJ7ZsnaAtOO3IMAzO5AWWveNsJ-"
       JOB_ID="63e529aa52e7f50019ed74eb" */
