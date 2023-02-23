@@ -5,11 +5,34 @@ const path = require('path');
 const fsExtra = require('fs-extra');
 
 module.exports = {
-    update_AttributeValue: (jsonData, strAttributeName, strAttributeValue) => {
+    encodeData:(jsonData)=>
+    {
+        let formBody = [];
+        for (var data in jsonData) {
+          var encodedKey = encodeURIComponent(data);
+          var encodedValue = encodeURIComponent(jsonData[data]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        body = formBody.join("&");
+        return body;
+    },
+    update_AttributeValue: (jsonData,strAttributeName,strAttributeValue) => {
         try {
-            jsonData = JSON.parse(jsonData);
-            jsonData[strAttributeName] = strAttributeValue
-            return JSON.stringify(jsonData);
+                jsonData[strAttributeName]=strAttributeValue;
+            return jsonData;
+        } catch (error) {
+            return error;
+        }
+    },
+   
+    update_AttributeValue1: (jsonData,strAttributeValue1,strAttributeValue2,strAttributeValue3) => {
+        try {
+            
+                jsonData.client_id=strAttributeValue1;
+                jsonData.client_secret=strAttributeValue2;
+                jsonData.grant_type=strAttributeValue3
+           
+            return jsonData;
         } catch (error) {
             return error;
         }
@@ -17,7 +40,7 @@ module.exports = {
     remove_Attribute: (jsonData, strAttributeName) => {
         try {
             delete jsonData[strAttributeName];
-            return jsonData
+            return jsonData;
         }
         catch (error) {
             return error;
@@ -48,7 +71,6 @@ module.exports = {
             return error;
         }
     },
-
     convertToCSV: async (arr) => {
         const array = [Object.keys(arr[0])].concat(arr)
 

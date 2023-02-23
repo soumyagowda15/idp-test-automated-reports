@@ -7,15 +7,11 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Tests",
+            "name": "Mocha chai Testing",
             "program":"${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
-                "--timeout",
-                "99999",
-                "${workspaceFolder}/Test-Cases/E2E/testE2E/sendMail.js"
-
-            ],
-            "console": "externalTerminal"
+                "${workspaceFolder}/TestCases/IDP/testIDP/idpTesting.js"
+            ]
         }
     ]
 }

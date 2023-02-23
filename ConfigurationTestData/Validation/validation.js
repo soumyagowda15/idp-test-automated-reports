@@ -10,7 +10,19 @@ module.exports={
     TOKEN_UNAVAILABLE:"Token unavailable",
     INVALID_ENDPOINT:"Invalid API endpoint",
     MISSING_GRANT_PARAMETER:"missing required parameter(s) (grant_type)",
-    INVALID_CLIENT:"no client authentication mechanism provided"
-
-
+    INVALID_CLIENT:"no client authentication mechanism provided",
+    UNKNOWN_JOB_TYPE:"Unknown Job Type, could not create job.",
+    CREATED_BY_REQUIRED:"Invalid params: created_by is a required property for job creation",
+    CONTENT_TYPE_INVALID:"Invalid content-type: Content-type header is invalid.",
+    INVALID_FILE_FORMAT:"Invalid File: The file specified is not a valid format for this endpoint.",
+    JOB_ID_REQUIRED:"Invalid params: job_id is a required property to upload files to a job",
+    JOB_ID_REQUIRED_START_DOC:"Invalid params:job_id is a required property to Start document analysis",
+    JOB_ID_REQUIRED_ENGINE_RESULT:"Invalid params: job_id is a required property for getting Engine result",
+    FILE_ID_REQUIRED_ENGINE_RESULT:"Invalid params: file_id is a required property for getting Engine result",
+    INVALID_FILE_ID:"Requested File_Id Doesn't Exist",
+    JOB_ID_DOESNOT_EXISTS:"Requested Job_Id doesn'nt Exist",
+    FILE_ID_DOESNOT_EXISTS:"Requested File_Id Doesn't Exist",
+    FILE_ID_REQUIRED:"Invalid params: file_id is a required property for getting file",
+    JOB_ID_REQUIRED_GET_DOCUMENT:"Invalid params: job_id is a required property for getting file",
+    FILE_NOT_FOUND:"FILE_NOT_FOUND"
 }

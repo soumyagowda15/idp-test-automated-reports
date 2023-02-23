@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const folderPath = 'CsvFiles/testData';
-const path = require('path');
 module.exports = {
 
     createCsv: async (expectedKey: string[], expectedValue: any[], actualKey: string[], actualValues: string[], confidenceKey: any[], confidenceValue: any) => {
@@ -46,7 +45,7 @@ module.exports = {
         // create csv with the header
         const csvWriter = createCsvWriter({
             path: csvFilePath,
-            header: headers
+            header: headers //contains expectedkeys
         });
         csvWriter.writeRecords([actualKeyObj, keyConfidenceObj, expectedValueObj, actualValueObj, valueConfidenceObj]);
     }

@@ -1,11 +1,11 @@
 const got = require('got');
 const addContext = require('mochawesome/addContext')
-const connectionData=require('./Connection');
 const configData=require('../ConfigurationTestData/config/test_Config');
-let client = null
+let client = null;
+const MongoClient = require('mongodb').MongoClient;
 
 module.exports = {
-    postAPICall: async (strURL, strParams) => {
+    postApiCall: async (strURL, strParams) => {
     try {
         const response = await got.post(strURL, strParams);
         return response;
@@ -13,7 +13,7 @@ module.exports = {
         return error;
     }
 },
-getAPICall: async (strURL, strParams) => {
+getApiCall: async (strURL, strParams) => {
     try {
         const response = await got.get(strURL, strParams);
         return response;
@@ -31,21 +31,16 @@ addContext: (object, title, value) => {
         return error
     }
 },
-mongoDBDataFetch: async (strCollectionName, jsonDataFieldToSearch) => {
+mongoDBDataFetch: async (strCollectionName, jsonDataToSearch) => {
     try {
         let elements = [];
-        
-        client = await connectionData.connectTestMongoDB();
-        let database = await client.db(configData.MONGO_TEST_DB_ENVIRONMENTS.MONGODB_DATABASE_NAME)
-        let collection = await database.collection(strCollectionName)
+        client = await MongoClient.connect(configData.MONGO_DB_ENVIRONMENTS[configData.environment].MONGODB_URI);
+        let database = await client.db(configData.MONGO_DB_ENVIRONMENTS[configData.environment].MONGODB_DATABASE_NAME);
+        let collection = await database.collection(strCollectionName);
 
-       
-        if (jsonDataFieldToSearch != "") {
-            elements = await collection.find(jsonDataFieldToSearch).toArray();
-        } else {
-            elements = await collection.find().toArray();
+        if (jsonDataToSearch != "") {
+            elements = await collection.find(jsonDataToSearch).toArray();
         }
-       
         return elements;
     } catch (err) {
         console.log(err)

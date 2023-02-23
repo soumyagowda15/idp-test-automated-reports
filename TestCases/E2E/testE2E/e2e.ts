@@ -25,13 +25,7 @@ const folderPath ='Attachment/Vitenam_passport'
 const sendMail=require('./sendMail.js')
 
 describe("Neutrinos IDP E2E Testing",async function(){
-  after(async function(){
-    console.log("after loop executed");
-    await sendMail.sendCSVReport(directoryPath)
-
-
-
-  })
+  
   describe("End to End Testing", async function () {
     // count the number of files in the directory
     before(async function(){
@@ -53,7 +47,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
       }
       var body = formBody.join("&");
     
-      let resp = await genericMethods.postAPICall(URL_ACCESS_TOKEN, {
+      let resp = await genericMethods.postApiCall(URL_ACCESS_TOKEN, {
         body: body,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -75,7 +69,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
 
     it("Create a Job", async () => {
       let body = JSON.stringify(createJobTestData);
-      let resp = await genericMethods.postAPICall(URL_CREATE_JOB, {
+      let resp = await genericMethods.postApiCall(URL_CREATE_JOB, {
         body: body,
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +116,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
         }
          //start Document Analysis
          let body = dataGenerator.update_AttributeValue(JSON.stringify(startDocTestData), "job_id", JOB_ID);
-         var startDocResp = await genericMethods.postAPICall(URL_START_DOC_ANALYSIS, {
+         var startDocResp = await genericMethods.postApiCall(URL_START_DOC_ANALYSIS, {
            body: body,
            headers:
            {
@@ -142,7 +136,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
          let SUB_URL_GET_JOB_DOCUMENT = `/api/job/${JOB_ID}/documents`
         let URL_GET_JOB_DOCUMENT = configData.BASE_URL + SUB_URL_GET_JOB_DOCUMENT
         console.log(URL_GET_JOB_DOCUMENT)
-        let jobDocumentresp = await genericMethods.getAPICall(URL_GET_JOB_DOCUMENT, {
+        let jobDocumentresp = await genericMethods.getApiCall(URL_GET_JOB_DOCUMENT, {
           headers:
           {
             "tenant": configData.TENANT,
@@ -177,7 +171,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
         }
         //Job Document Result
         var URL_GET_JOB_DOCUMENT_RESULT = configData.BASE_URL + `/api/job/${JOB_ID}/file/${FILE_ID}/result`;
-        let jobDocResultResp = await genericMethods.getAPICall(URL_GET_JOB_DOCUMENT_RESULT, {
+        let jobDocResultResp = await genericMethods.getApiCall(URL_GET_JOB_DOCUMENT_RESULT, {
           headers: {
             "tenant": configData.TENANT,
             "Authorization": `Bearer ${ACCESS_TOKEN}`
@@ -189,6 +183,7 @@ describe("Neutrinos IDP E2E Testing",async function(){
         let documentResults = await genericMethods.mongoDBDataFetch("document", { "document_label": bodyObj[0]["classification"][0]["tag_name"] });
     
         let EngineResultField = await genericMethods.mongoDBDataFetch("transformed_engine_result", { "file_id": FILE_ID });
+        let fileName=EngineResultField[0].metadata.filename;
         let documentFieldResults = documentResults[0]["rules"]["form_fields"];
         let a = new TestEngineResult(EngineResultField, documentFieldResults);
         try {
