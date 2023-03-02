@@ -7,23 +7,23 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const nodemailer = require('nodemailer');
 app.listen(4000);
-
+const configData=require('./ConfigurationTestData/config/test_Config')
 app.get('/ping', (req, res) => {
   res.send("server is up")
 })
-app.get('/api/idp_api_testing', async (req, res) => {
+app.get('/api/idp_api_testing-prod', async (req, res) => {
   let hostUrl = req.protocol + '://' + req.get('host'); //To-do
   let cmdExec = new Execution();
-  cmdExec.execCommand('npm run IDPTesting', function (returnvalue) {
+  cmdExec.execCommand('npm run IDPTesting-prod', function (returnvalue) {
   getReportData(returnvalue);
   res.send("Executing IDP API's")
   });
 });
 
 
-app.get('/api/similarityTesting', async (req, res) => {
+app.get('/api/similarityTesting-prod', async (req, res) => {
   let cmdExec = new Execution();
-  cmdExec.execCommand('npm run E2E', function () {
+  cmdExec.execCommand('npm run E2E-prod', function () {
  // getReportData();   // change sendmail to send csv files
   res.send("Executing E2E API's")
   });
@@ -64,16 +64,13 @@ function getReportData(executionData) {
     service: 'gmail',
     port: 587,
     secure: false,
-    auth: {
-      user: 'soumya.gowda@neutrinos.co',
-      pass: 'P@sword4'  
-    }
+    auth: configData.MAIL_AUTHORIZATION
   });
 
   // Send mail
   const mailOptions = {
-    from: 'soumya.gowda@neutrinos.co',
-    to: 'soumya.gowda@neutrinos.co',
+    from: configData.MAIL_FROM,
+    to: configData.MAIL_TO,
     subject: 'Test Report Summary-Neutrinos Intelligent Document Processing',
     html: htmlTable
   };
@@ -85,7 +82,6 @@ function getReportData(executionData) {
       console.log("Email sent");
     }
   });
-
 }
 
 

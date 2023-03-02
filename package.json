@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "Testingtest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  Test-Cases/Access-Token/testIDPTesting/IDPTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/TestingReport --exit",
-    "IDPTesting": "mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
-    "E2E": "mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit"
-  },
+    "IDPTesting-prod": "set NODE_ENV=prod&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
+    "IDPTesting-dev": "set NODE_ENV=dev&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
+    "IDPTesting-test": "set NODE_ENV=test&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
+    "E2E-prod": "set NODE_ENV=prod&& mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit",
+    "E2E-dev": "set NODE_ENV=dev&& mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit",
+    "E2E-test": "set NODE_ENV=test&& mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit"
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -18,11 +21,11 @@
     "chai-http": "^4.3.0",
     "child_process": "^1.0.2",
     "convert-excel-to-json": "^1.7.0",
+    "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "csvtojson": "^2.0.10",
     "delay": "^5.0.0",
-    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "form-data": "^4.0.0",
@@ -68,7 +71,10 @@
     "@types/jasmine": "^4.3.1",
     "@types/mocha": "^10.0.1",
     "@types/mochawesome": "6.2.1",
+    "@types/node": "^18.14.2",
     "chai": "^4.3.7",
+    "custom-env": "^2.0.1",
+    "dotenv": "16.0.1",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"

@@ -3,7 +3,9 @@ const addContext = require('mochawesome/addContext')
 const configData=require('../ConfigurationTestData/config/test_Config');
 let client = null;
 const MongoClient = require('mongodb').MongoClient;
-
+const path=require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve("environment", `${process.env.NODE_ENV}.env`) });
 module.exports = {
     postApiCall: async (strURL, strParams) => {
     try {
@@ -34,8 +36,8 @@ addContext: (object, title, value) => {
 mongoDBDataFetch: async (strCollectionName, jsonDataToSearch) => {
     try {
         let elements = [];
-        client = await MongoClient.connect(configData.MONGO_DB_ENVIRONMENTS[configData.environment].MONGODB_URI);
-        let database = await client.db(configData.MONGO_DB_ENVIRONMENTS[configData.environment].MONGODB_DATABASE_NAME);
+        client = await MongoClient.connect(process.env.MONGODB_URI);
+        let database = await client.db(process.env.MONGODB_DATABASE_NAME);
         let collection = await database.collection(strCollectionName);
 
         if (jsonDataToSearch != "") {

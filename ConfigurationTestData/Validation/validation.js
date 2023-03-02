@@ -24,5 +24,6 @@ module.exports={
     FILE_ID_DOESNOT_EXISTS:"Requested File_Id Doesn't Exist",
     FILE_ID_REQUIRED:"Invalid params: file_id is a required property for getting file",
     JOB_ID_REQUIRED_GET_DOCUMENT:"Invalid params: job_id is a required property for getting file",
-    FILE_NOT_FOUND:"FILE_NOT_FOUND"
+    FILE_NOT_FOUND:"FILE_NOT_FOUND",
+    INVALID_JOB_TYPE:"Unknown Job Type, could not create job."
 }
