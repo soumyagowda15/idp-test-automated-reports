@@ -4,8 +4,7 @@ import { EngineResult } from '../../../EngineInterface/IEngineResults'
 import { FormField } from '../../../EngineInterface/IFormField';
 const csvCreation = require('./createCsv.ts');
 const stringSimilarity = require("string-similarity");
-
-
+var expectedLabel:any,expectedValue:any,actualLabel:any,actualValue:any;
 function similarity(str1: any, str2: string) {
   if (str1=="date" && isNaN(Date.parse(str2)))
   {
@@ -24,7 +23,7 @@ export class TestEngineResult {
     this.expectedFormField = expectedFormField;
   }
 
-  validateFormField(engineFormField: FormField[], expectedFormField: FormField[]) {
+  validateFormField(engineFormField: FormField[], expectedFormField: FormField[],fileName:string) {
 
     var expectedKeyarr: string[] = ["EXPECTED_KEYS"], expectedValuearr: any[] = ["EXPECTED_VALUES"], actualKeyarr: string[] = [], actualValuesarr: any[] = [], confidenceValuearr: any[] = [], confidenceKeyarr: any[] = [];
     for (let expectedKeysCount = 0; expectedKeysCount < expectedFormField.length; expectedKeysCount++) {
@@ -35,7 +34,6 @@ export class TestEngineResult {
       // compare expected(Document) and Actual(Engine Results)
       engineFormField.forEach(v => {
         if ((expectedFormField[expectedKeysCount].key.content).includes(v.key.content)) {
-          var expectedLabel:any,expectedValue:any,actualLabel:any,actualValue:any;
            expectedLabel = expectedFormField[expectedKeysCount].key.content;
            expectedValue = expectedFormField[expectedKeysCount].config?._n_field_type_;
            actualLabel = v.key.content;
@@ -61,7 +59,7 @@ export class TestEngineResult {
     console.log("confidenceKeyarr",confidenceKeyarr)
     console.log("confidenceValuearr",confidenceValuearr)
     // create csv file
-    csvCreation.createCsv(expectedKeyarr, expectedValuearr, actualKeyarr, actualValuesarr, confidenceKeyarr, confidenceValuearr);
+    csvCreation.createCsv(expectedKeyarr, expectedValuearr, actualKeyarr, actualValuesarr, confidenceKeyarr, confidenceValuearr,fileName);
   }
 }
 

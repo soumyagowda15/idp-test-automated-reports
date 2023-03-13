@@ -22,6 +22,7 @@ var URL_CREATE_JOB = process.env.BASE_URL + configData.SUB_URL_CREATE_JOB;
 var URL_START_DOC_ANALYSIS = process.env.BASE_URL + configData.URL_START_DOC_ANALYSIS;
 var URL_GET_JOBS = process.env.BASE_URL + configData.SUB_URL_GET_JOBS;
 var resp, ACCESS_TOKEN, FILE_ID, JOB_ID;
+var DocumentsFolderPath='Attachment/Passport'
 
 describe("Neutrinos Intelligent Document Processing APIs", async function () {
   
@@ -396,7 +397,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
 
   describe("Create Job", async function () {
     createJobData=new dataGeneration(createJobTestData);
-    it.only("TC_CJ_01->To verify Job is created for a client if the proper tenant and access token is provided in the header for '/JOB' POST API", async function () {
+    it("TC_CJ_01->To verify Job is created for a client if the proper tenant and access token is provided in the header for '/JOB' POST API", async function () {
        //testData for createJob
       let body = JSON.stringify(createJobTestData);
       //send Request
@@ -405,7 +406,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         headers: {
           "Content-Type": "application/json",
           "tenant": "neutrinos",
-          "Authorization": `Bearer _VuVxP_QJg7kK80yhno4CRmv1wR0rncbjPRdULyj_j2`
+          "Authorization": `Bearer ${ACCESS_TOKEN}`
         }
       })
       genericMethods.addContext(this, 'INPUT JSON', body);
@@ -653,7 +654,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -678,7 +679,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -702,7 +703,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/pancard.png`), `pancard.png`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/pancard.png`), `pancard.png`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -720,7 +721,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', "Invalid Job_id");
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -762,7 +763,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${process.env.EXPIRED_ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -780,7 +781,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', "INVALID_ACCESS_TOKEN")
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -797,7 +798,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'IDP_DEV')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID);
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -815,7 +816,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', ' ')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID)
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -834,7 +835,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', ' ')
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', JOB_ID);
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -870,7 +871,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
 
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -906,7 +907,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', " ")
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);
@@ -925,7 +926,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         .set('Content-Type', 'multipart/form-data')
         .set('tenant', 'neutrinos')
         .set('Authorization', `Bearer ${ACCESS_TOKEN}`)
-        .attach('files', fs.createReadStream(`Attachment/Passport/Passport.pdf`), `Passport.pdf`)
+        .attach('files', fs.createReadStream(`${DocumentsFolderPath}/Passport.pdf`), `Passport.pdf`)
         .field('job_id', " ")
 
       genericMethods.addContext(this, 'OUTPUT', resp.body);

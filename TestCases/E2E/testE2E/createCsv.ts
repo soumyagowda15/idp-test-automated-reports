@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const folderPath = 'CsvFiles/testData';
+const csvFilesFolderPath = 'CsvFiles/testData';
 module.exports = {
 
-    createCsv: async (expectedKey: string[], expectedValue: any[], actualKey: string[], actualValues: string[], confidenceKey: any[], confidenceValue: any) => {
+    createCsv: async (expectedKey: string[], expectedValue: any[], actualKey: string[], actualValues: string[], confidenceKey: any[], confidenceValue: any,fileName:string) => {
 
-        let csvFilePath = `${folderPath}/${uuidv4()}.csv`;
+        let csvFilePath = `${csvFilesFolderPath}/${uuidv4()}_${fileName}.csv`;
         let headers = [];
         let actualKeyObj: any = {};
         let  actualValueObj: any = {};

@@ -7,7 +7,8 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const nodemailer = require('nodemailer');
 app.listen(4000);
-const configData=require('./ConfigurationTestData/config/test_Config')
+const configData=require('./ConfigurationTestData/config/test_Config');
+const gitPages=require('./reportGitCommands')
 app.get('/ping', (req, res) => {
   res.send("server is up")
 })
@@ -16,6 +17,7 @@ app.get('/api/idp_api_testing-prod', async (req, res) => {
   let cmdExec = new Execution();
   cmdExec.execCommand('npm run IDPTesting-prod', function (returnvalue) {
   getReportData(returnvalue);
+  //gitPages.copyReportToGithub();
   res.send("Executing IDP API's")
   });
 });
