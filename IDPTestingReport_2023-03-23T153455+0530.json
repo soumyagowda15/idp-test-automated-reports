@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-03-23T10:04:53.287Z",
+    "end": "2023-03-23T10:04:55.494Z",
+    "duration": 2207,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "225b932f-dc74-48c1-b48a-fc313beeeb9e",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "555e3e86-704b-4968-9757-8184e12d077d",
+          "title": "Neutrinos Intelligent Document Processing APIs",
+          "fullFile": "D:\\Testing\\Automation_testing\\idp-automated-tests\\TestCases\\IDP\\testIDP\\idpTesting.js",
+          "file": "\\TestCases\\IDP\\testIDP\\idpTesting.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Neutrinos Intelligent Document Processing APIs\"",
+              "fullTitle": "Neutrinos Intelligent Document Processing APIs \"before all\" hook in \"Neutrinos Intelligent Document Processing APIs\"",
+              "timedOut": false,
+              "duration": 644,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let body = await accessTokenData.setValue(\"client_id\", process.env.CLIENT_ID)\n                                .setValue(\"client_secret\", process.env.CLIENT_SECRET)\n                                .setValue(\"grant_type\", configData.GRANT_TYPE)\n                                .encode();;\n//Send request to fetch access Token\nresp = await genericMethods.postApiCall(configData.URL_ACCESS_TOKEN, {\n  body: body,\n  headers: { \n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n  }\n})\nlet bodyObj = JSON.parse(resp.body);\nACCESS_TOKEN = bodyObj.access_token;",
+              "err": {},
+              "uuid": "78a4d806-25f3-4521-849b-d3b966ef6395",
+              "parentUUID": "555e3e86-704b-4968-9757-8184e12d077d",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "74539db6-360f-4ae4-8ea9-93320c47ee22",
+              "title": "Get Access Token",
+              "fullFile": "D:\\Testing\\Automation_testing\\idp-automated-tests\\TestCases\\IDP\\testIDP\\idpTesting.js",
+              "file": "\\TestCases\\IDP\\testIDP\\idpTesting.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "TC_AC_01->To verify that access Token is genearted when proper client ID (client should be registered to DEV IDP), client Secret, and grant type is provided in the Input for the Get Access Token POST API ",
+                  "fullTitle": "Neutrinos Intelligent Document Processing APIs Get Access Token TC_AC_01->To verify that access Token is genearted when proper client ID (client should be registered to DEV IDP), client Secret, and grant type is provided in the Input for the Get Access Token POST API ",
+                  "timedOut": false,
+                  "duration": 1559,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": "[\n  {\n    \"title\": \"INPUT \",\n    \"value\": \"client_id=x4PNAVz-EzNX48LFqnOsP&client_secret=n-69mmPydqxGRXjxmlLwi_wRIYHHY-2WRY2wFUmLKcQUjy19KsJ1KN35akFUl_d8uyXEeb6MmJohNEmgEwf3HQ&grant_type=client_credentials\"\n  },\n  {\n    \"title\": \"OUTPUT \",\n    \"value\": \"{\\\"access_token\\\":\\\"46kiI0BM6R0H7uC2IlRRm6oRbitS9uUVyyATU6OFww6\\\",\\\"expires_in\\\":3600,\\\"token_type\\\":\\\"Bearer\\\"}\"\n  }\n]",
+                  "code": "//update testData &encode testData\nconst body = await accessTokenData.setValue(\"client_id\", process.env.CLIENT_ID)\n                                  .setValue(\"client_secret\", process.env.CLIENT_SECRET)\n                                  .setValue(\"grant_type\", configData.GRANT_TYPE)\n                                  .encode();\n//Send request to fetch access Token\nresp = await genericMethods.postApiCall(configData.URL_ACCESS_TOKEN, {\n  body: body,\n  headers: {\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n  }\n})\ngenericMethods.addContext(this, 'INPUT ', body);\ngenericMethods.addContext(this, 'OUTPUT ', resp.body);\n// Assertion for response\nif (resp !== undefined) {\n  let bodyObj = JSON.parse(resp.body);\n  assert.equal(resp.statusCode, HTTPStatusCodes.OK);\n  assert.equal(resp.statusMessage, HTTPStatusCode.getMessage(200));\n  ACCESS_TOKEN = bodyObj.access_token;\n}\nelse {\n  assert.fail(resp, \" is undefined\");\n}",
+                  "err": {},
+                  "uuid": "efbd5f6e-156d-4afa-94b7-0719b5e10d90",
+                  "parentUUID": "74539db6-360f-4ae4-8ea9-93320c47ee22",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "efbd5f6e-156d-4afa-94b7-0719b5e10d90"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1559,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 180000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 180000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 180000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "IDPTestingReport",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "5.0.0"
+    },
+    "marge": {
+      "options": {
+        "timestamp": true,
+        "reportDir": "Reporting/IDPTestingReport",
+        "reportFilename": "IDPTestingReport",
+        "reportTitle": "IDPTesting"
+      },
+      "version": "4.1.0"
+    }
+  }
+}
