@@ -1,24 +1,30 @@
 const express = require("express");
 const app = express();
 const fs = require('fs');
+const path = require('path')
 var http = require('http').Server(app);
 const child_process = require('child_process');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const nodemailer = require('nodemailer');
 app.listen(4000);
-const configData=require('./ConfigurationTestData/config/test_Config');
-const gitPages=require('./reportGitCommands')
+const configData = require('./ConfigurationTestData/config/test_Config');
+const gitPages = require('./reportGitCommands')
+const reportDirectoyPath = './Reporting';
+
+
 app.get('/ping', (req, res) => {
   res.send("server is up")
 })
+
+
 app.get('/api/idp_api_testing-prod', async (req, res) => {
-  let hostUrl = req.protocol + '://' + req.get('host'); //To-do
+  deleteFilesInDirectory(reportDirectoyPath); // delete the previous execution reports from the Reporting Directory.
   let cmdExec = new Execution();
-  cmdExec.execCommand('npm run IDPTesting-prod', function (returnvalue) {
-  getReportData(returnvalue);
-  //gitPages.copyReportToGithub();
-  res.send("Executing IDP API's")
+  cmdExec.execCommand('npm run IDPTesting-prod', async function (returnvalue) {
+    await gitPages.copyReportToGithub(); // Copy the Reports from Reporting Directory to the Github Repo
+    getReportData(returnvalue);
+    res.send("Executing IDP API's")
   });
 });
 
@@ -26,8 +32,8 @@ app.get('/api/idp_api_testing-prod', async (req, res) => {
 app.get('/api/similarityTesting-prod', async (req, res) => {
   let cmdExec = new Execution();
   cmdExec.execCommand('npm run E2E-prod', function () {
- // getReportData();   // change sendmail to send csv files
-  res.send("Executing E2E API's")
+    // getReportData();   // change sendmail to send csv files
+    res.send("Executing E2E API's")
   });
 });
 
@@ -44,23 +50,27 @@ function Execution() {
 }
 
 function getReportData(executionData) {
-
+  let testCases = [];
   let reportData = getReport(executionData);
-
   // Build HTML table
   let htmlTable = '<table style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; color: black; background-color: white;">';
-  htmlTable += '<tr><th colspan="2" style="background-color: black; color: white; padding: 15px;">Neutrinos Intelligent Document Processing APIs Test Report Summary</th></tr>';
-  for (let i = 0; i < reportData.length; i++) {
-    if (typeof reportData[i] === 'object') {
-      for (const [key, value] of Object.entries(reportData[i])) {
-        htmlTable += `<tr style="background-color: black; color: white;"><td style="padding: 10px;">${key}</td><td style="padding: 10px;">${value}</td></tr>`;
-      }
-    } else {
-      htmlTable += `<tr style="background-color: black; color: white;"><td colspan="2" style="padding: 10px;"><a href="${reportData[i]}" style="color: white; text-decoration: none;">Test Report Link</a></td></tr>`;
-    }
+  htmlTable += '<tr><th colspan="2" style="background-color: black; color: white; padding: 15px;">' + reportData[0] + '</th></tr>';
+  let reportLink = reportData[3]; // Store report link in variable
+  testCases[0] = `Total Test Cases:${reportData[1].tests}<br />`
+  testCases[1] = `Total passed test cases:${reportData[1].passes}<br />`
+  testCases[2] = `Total failed test cases:${reportData[1].failures}<br />`
+  const jsonReportData = reportData[1]; // Get the object containing the report data
+  htmlTable += `<tr><td colspan="2" style="text-align: center; padding: 10px;"></td></tr>`;
+  for (const [key, value] of Object.entries(jsonReportData)) {
+    htmlTable += `<tr><td style="padding: 10px;">${key}</td><td style="padding: 10px;">${value}</td></tr>`;
   }
   htmlTable += '</table>';
+  let html = `Hi,<br /><h3>Test Case Summary</h3>${testCases[0]}${testCases[1]}${testCases[2]}<br />Please find the link for the automation Reports  <a href="${reportLink}">Click here for the detailed test report</a><br /><br /> ${htmlTable}<br />Thanks,<br />IDP Automation Team`;
+  sendMail(html);
 
+}
+
+function sendMail(html) {
   // Create nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -73,8 +83,8 @@ function getReportData(executionData) {
   const mailOptions = {
     from: configData.MAIL_FROM,
     to: configData.MAIL_TO,
-    subject: 'Test Report Summary-Neutrinos Intelligent Document Processing',
-    html: htmlTable
+    subject: 'Test Report Summary of Neutrinos Intelligent Document Processing',
+    html: html
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -107,8 +117,12 @@ function getReport(executionData) {
 
           // fetch html report url
         } else if (htmlJsonData[htmlJsonDataCount].includes('.html')) {
-          reportData.push(htmlJsonData[htmlJsonDataCount].trim()); 
-
+          reportData.push(htmlJsonData[htmlJsonDataCount].trim());
+          let htmlFileName = htmlJsonData[htmlJsonDataCount].substring(htmlJsonData[htmlJsonDataCount].lastIndexOf("\\") + 1);
+          htmlFileName = htmlFileName.replace(/\+/g, "%2B");
+          const htmlReportUrl = `https://soumyagowda15.github.io/idp-test-automated-reports/${htmlFileName}`;
+          console.log(htmlReportUrl);
+          reportData.push(htmlReportUrl)
         }
       }
     }
@@ -117,9 +131,35 @@ function getReport(executionData) {
   return reportData;
 }
 
+//Delete the Reports in the Reporting Directory 
+function deleteFilesInDirectory(dirPath) {
+  fs.readdir(dirPath, (err, files) => {
+    if (err)
+      throw err;
 
+    if (files.length === 0) {
+      console.log(`Directory is empty: ${dirPath}`);
+      return;
+    }
+    files.forEach(file => {
+      console.log("dirPath", dirPath)
+      console.log("filePath", `${dirPath}/${file}`)
+      const filePath = `${dirPath}/${file}`;
 
+      fs.stat(filePath, (err, stat) => {
+        if (err) throw err;
 
+        if (stat.isFile()) {
+          fs.unlink(filePath, err => {
+            if (err) throw err;
 
+            console.log(`Deleted file: ${filePath}`);
+          });
+        } else if (stat.isDirectory()) {
+          console.log(`Skipping directory: ${filePath}`);
+        }
+      });
+    });
+  });
 
-
+}

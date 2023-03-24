@@ -59,7 +59,6 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
       // Assertion for response
       if (resp !== undefined) {
         let bodyObj = JSON.parse(resp.body);
@@ -84,7 +83,6 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         }
       })
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -110,7 +108,6 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
 
       let bodyObj = JSON.parse(resp.body);
 
@@ -138,8 +135,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+     
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -166,8 +162,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+      
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -194,8 +189,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+     
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -222,7 +216,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
+      
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -248,7 +242,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
         }
       })
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
+      
       let bodyObj = JSON.parse(resp.body);
       if (resp !== undefined) {
         assert.equal(resp.statusCode, HTTPStatusCodes.UNAUTHORIZED);
@@ -273,8 +267,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+      
       let bodyObj = JSON.parse(resp.body);
       if (resp !== undefined) {
         assert.equal(resp.statusCode, HTTPStatusCodes.BAD_REQUEST);
@@ -300,8 +293,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+      
       let bodyObj = JSON.parse(resp.body);
       if (resp !== undefined) {
         assert.equal(resp.statusCode, HTTPStatusCodes.UNAUTHORIZED);
@@ -327,7 +319,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
+      
       let bodyObj = JSON.parse(resp.body);
 
       if (resp !== undefined) {
@@ -354,8 +346,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+      
       let bodyObj = JSON.parse(resp.body);
       if (resp !== undefined) {
         assert.equal(resp.statusCode, HTTPStatusCodes.UNAUTHORIZED);
@@ -381,8 +372,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
       })
 
       genericMethods.addContext(this, 'INPUT ', body);
-      genericMethods.addContext(this, 'OUTPUT ', resp.body);
-
+      
       let bodyObj = JSON.parse(resp.body);
       if (resp !== undefined) {
         assert.equal(resp.statusCode, HTTPStatusCodes.UNAUTHORIZED);
