@@ -17,6 +17,7 @@ const createJobTestData = require('../../../ConfigurationTestData/Test-Data/test
 const uploadDocument = require('../../../ConfigurationTestData/Test-Data/testUploadDocument.json');
 const DocumentAnalysis = require('../../../ConfigurationTestData/Test-Data/testStartDocAnalysis.json');
 dotenv.config({ path: path.resolve("environment", `${process.env.NODE_ENV}.env`) });
+console.log("process env", process.env.NODE_ENV)
 const accessTokenData=new dataGeneration(configData.auth);
 var URL_CREATE_JOB = process.env.BASE_URL + configData.SUB_URL_CREATE_JOB;
 var URL_START_DOC_ANALYSIS = process.env.BASE_URL + configData.URL_START_DOC_ANALYSIS;
@@ -42,7 +43,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
     ACCESS_TOKEN = bodyObj.access_token;
   })
 
-  describe("Get Access Token", async function () {
+  describe.only("Get Access Token", async function () {
   
     it("TC_AC_01->To verify that access Token is genearted when proper client ID (client should be registered to DEV IDP), client Secret, and grant type is provided in the Input for the Get Access Token POST API ", async function () {
       //update testData &encode testData

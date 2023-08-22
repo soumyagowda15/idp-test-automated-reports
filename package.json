@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "IDPTesting-prod": "set NODE_ENV=prod&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
-    "IDPTesting-dev": "set NODE_ENV=dev&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
+    "IDPTesting-prod": "cross-env NODE_ENV=prod&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
+    "IDPTesting-dev": "cross-env NODE_ENV=dev&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
     "IDPTesting-test": "set NODE_ENV=test&& mocha TestCases/IDP/testIDP/idpTesting.js --timeout 180000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/IDPTestingReport,reportFilename=IDPTestingReport,reportTitle=IDPTesting --exit",
     "E2E-prod": "set NODE_ENV=prod&& mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit",
     "E2E-dev": "set NODE_ENV=dev&& mocha --require ts-node/register TestCases/E2E/testE2E/e2e.ts --timeout 980000000 --reporter mochawesome --reporter-options timestamp,reportDir=Reporting/E2EReport,reportFilename=E2EReport,reportTitle=E2E-similarityCheckTesting --exit",
