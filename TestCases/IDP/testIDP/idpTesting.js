@@ -43,7 +43,7 @@ describe("Neutrinos Intelligent Document Processing APIs", async function () {
     ACCESS_TOKEN = bodyObj.access_token;
   })
 
-  describe.only("Get Access Token", async function () {
+  describe("Get Access Token", async function () {
   
     it("TC_AC_01->To verify that access Token is genearted when proper client ID (client should be registered to DEV IDP), client Secret, and grant type is provided in the Input for the Get Access Token POST API ", async function () {
       //update testData &encode testData
