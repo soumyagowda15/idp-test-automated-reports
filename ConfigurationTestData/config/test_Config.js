@@ -15,8 +15,8 @@ module.exports = {
     GRANT_TYPE: "client_credentials",
     NEUTRINOS_TENANT_ID: '6225cde095f5119c54aa1234',
     TENANT: "neutrinos",
-    MAIL_TO:"idp-team@neutrinos.co",
-    //MAIL_TO:"soumya.gowda@neutrinos.co",
+    //MAIL_TO:"idp-team@neutrinos.co",
+    MAIL_TO:"soumya.gowda@neutrinos.co",
     MAIL_FROM:"soumya.gowda@neutrinos.co",
     MAIL_AUTHORIZATION:{
         user: 'soumya.gowda@neutrinos.co',
